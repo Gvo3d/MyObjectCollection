@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.Consumer;
@@ -71,6 +72,7 @@ public class ObjectCollection implements Collection {
     }
 
     private MyNode searchPreviousInNode(MyNode searcheablePreviousNode, MyNode searchNode){
+//        System.out.println("Node "+searchNode.getId()+", nextNode is "+searchNode.getNextNode()+", we are searching: "+searcheablePreviousNode);
         if (searchNode.getNextNode()==searcheablePreviousNode) {
             return searchNode;
         }
@@ -97,10 +99,15 @@ public class ObjectCollection implements Collection {
         if (removeableNode.getId()==-1) {
             return false;
         }
+        if (removeableNode==firstNode ){
+            firstNode=firstNode.getNextNode();
+            listsize--;
+        } else {
         MyNode previousNodeFromRemoveable = searchPreviousInNode(removeableNode, firstNode);
         previousNodeFromRemoveable.setNextNode(removeableNode.getNextNode());
         removeableNode=null;
         listsize--;
+        }
         return true;
     }
 
@@ -109,10 +116,15 @@ public class ObjectCollection implements Collection {
         if (removeableNode.getId()==-1) {
             return false;
         }
-        MyNode previousNodeFromRemoveable = searchPreviousInNode(removeableNode, firstNode);
-        previousNodeFromRemoveable.setNextNode(removeableNode.getNextNode());
-        removeableNode=null;
-        listsize--;
+        if (removeableNode==firstNode ){
+            firstNode=firstNode.getNextNode();
+            listsize--;
+        } else {
+            MyNode previousNodeFromRemoveable = searchPreviousInNode(removeableNode, firstNode);
+            previousNodeFromRemoveable.setNextNode(removeableNode.getNextNode());
+            removeableNode = null;
+            listsize--;
+        }
         return true;
     }
 
@@ -124,7 +136,9 @@ public class ObjectCollection implements Collection {
     }
 
     public void printAll(){
-        printNext(firstNode);
+        if (listsize>0) {
+            printNext(firstNode);
+        } else System.out.println("Collection has 0 items.");
     }
 
 
@@ -177,38 +191,27 @@ public class ObjectCollection implements Collection {
     @Override
     public boolean retainAll(Collection retainableCollection) {
         boolean operationFlag = false;
-        ObjectCollection newCollection = new ObjectCollection();
-
+        ArrayList<Object> newCollection = new ArrayList<>();
         for (Object searchableItem: retainableCollection){
-            for (int i=0; i<listsize; i++){
                 MyNode coincidenceNode = searchDataInNode(searchableItem, firstNode);
-                if (coincidenceNode.getId()==-1) { break;
-                } else {
+                if (coincidenceNode.getId()!=-1) {
                     operationFlag=true;
                     newCollection.add(coincidenceNode.getData());
                     removeById(coincidenceNode.getId());
-                }
             }
         }
-        clear();
-        addAll(newCollection);
+        if (operationFlag) {
+            clear();
+            addAll(newCollection);
+        }
         return operationFlag;
     }
 
     @Override
     public boolean removeAll(Collection deletingItems) {
         boolean operationFlag = false;
-//        for (Object searchableItem: deletingItems){
-        Object[] searchableArray = new Object[deletingItems.size()];
-        searchableArray = deletingItems.toArray();
-        for (int j=0; j<searchableArray.length; j++){
-            Object searchableItem = searchableArray[j];
-            boolean removingFlag = true;
-            for (int i=0; i<listsize; i++){
-               removingFlag=this.remove(searchableItem);
-                if (!removingFlag) { break;
-                } else operationFlag=true;
-            }
+        for (Object searchableItem: deletingItems){
+            operationFlag =remove(searchableItem);
         }
         return operationFlag;
     }
@@ -216,6 +219,7 @@ public class ObjectCollection implements Collection {
 
     @Override
     public boolean containsAll(Collection containableCollection) {
+        if (firstNode==null) return false;
         for (Object comparsionItem: containableCollection){
             boolean answer = contains(comparsionItem);
             if (!answer) return false;
@@ -226,6 +230,7 @@ public class ObjectCollection implements Collection {
 
     @Override
     public boolean contains(Object searcheableObject) {
+        if (firstNode==null) return false;
         MyNode answer = searchDataInNode(searcheableObject, firstNode);
         if (answer.getId()==-1) return false;
         return true;
