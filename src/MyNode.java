@@ -7,7 +7,7 @@ public class MyNode {
     private MyNode nextNode;
 
     public MyNode(int id, Object data, MyNode nextNode) {
-        this.id=id;
+        this.id = id;
         this.data = data;
         this.nextNode = nextNode;
     }
@@ -36,11 +36,11 @@ public class MyNode {
         this.id = id;
     }
 
-    public String toString(){
+    public String toString() {
         return data.toString();
     }
 
-    public String getThisClass(){
+    public String getThisClass() {
         return String.valueOf(data.getClass());
     }
 }

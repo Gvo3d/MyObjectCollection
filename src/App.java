@@ -29,7 +29,7 @@ public class App {
         System.out.println("It this collection empty? - " + collection.isEmpty());
         System.out.println("Data in cell 1 has a class: " + (collection.getObjectClass(1)));
         System.out.println("Is there a value \"String3\" in this collection? - " + collection.contains("String3"));
-        System.out.println("And in what cell is it? - " + collection.searchIdByDataInNode("String3"));
+        System.out.println("And in what cell is it? - " + collection.searchIdByData("String3"));
         System.out.println();
 
         System.out.println("We are adding new item \"String6\" and deleting \"String2\" and deleting cell 4");
@@ -61,7 +61,7 @@ public class App {
         collection.printAll();
         System.out.println();
 
-        System.out.println("We are retaining data from our collection with other one");
+        System.out.println("We are retaining data from our collection with other one, deleting all incoincidences.");
         collection.retainAll(collection2);
         collection.printAll();
     }
