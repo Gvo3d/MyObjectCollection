@@ -1,3 +1,5 @@
+package main;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -80,7 +82,6 @@ public class ObjectCollection implements Collection {
     }
 
     private MyNode searchPreviousInNode(MyNode searcheablePreviousNode, MyNode searchNode) {
-//        System.out.println("Node "+searchNode.getId()+", nextNode is "+searchNode.getNextNode()+", we are searching: "+searcheablePreviousNode);
         if (searchNode.getNextNode() == searcheablePreviousNode) {
             return searchNode;
         }
