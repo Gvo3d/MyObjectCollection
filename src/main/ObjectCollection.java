@@ -7,8 +7,9 @@ import java.util.Iterator;
 /**
  * Created by Gvozd on 06.12.2015.
  */
-public class ObjectCollection implements Collection {
+public class ObjectCollection implements Collection, Iterable {
     private MyNode firstNode = null;
+    private MyNode lastNode = null;
     private int listsize = 0;
     private int idCounter = 0;
 
@@ -16,7 +17,8 @@ public class ObjectCollection implements Collection {
     }
 
     public ObjectCollection(Object newObject) {
-        firstNode = new MyNode(0, newObject, null);
+        firstNode = new MyNode(0, newObject, null, null);
+        lastNode=firstNode;
         listsize = 1;
         idCounter = 1;
     }
@@ -35,31 +37,31 @@ public class ObjectCollection implements Collection {
     @Override
     public boolean add(Object newObject) {
         if (listsize == 0) {
-            firstNode = new MyNode(idCounter, newObject, null);
+            firstNode = new MyNode(idCounter, newObject, null, null);
+            lastNode=firstNode;
             listsize = 1;
             idCounter++;
             return true;
         }
         if (listsize == 1) {
-            MyNode newNode = new MyNode(idCounter, newObject, null);
+            MyNode newNode = new MyNode(idCounter, newObject, null, firstNode);
             firstNode.setNextNode(newNode);
+            lastNode=newNode;
             listsize++;
             idCounter++;
             return true;
         }
         MyNode lastNode = getLast(firstNode);
-        MyNode newNode = new MyNode(idCounter, newObject, null);
+        MyNode newNode = new MyNode(idCounter, newObject, null, getLast(firstNode));
         lastNode.setNextNode(newNode);
+        lastNode=newNode;
         listsize++;
         idCounter++;
         return true;
     }
 
     private MyNode getLast(MyNode searchNode) {
-        if (searchNode.getNextNode() == null) {
-            return searchNode;
-        }
-        return getLast(searchNode.getNextNode());
+        return lastNode;
     }
 
     private MyNode searchDataInNode(Object searchData, MyNode searchNode) {

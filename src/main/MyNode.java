@@ -7,11 +7,13 @@ public class MyNode {
     private int id;
     private Object data;
     private MyNode nextNode;
+    private MyNode prevNode;
 
-    public MyNode(int id, Object data, MyNode nextNode) {
+    public MyNode(int id, Object data, MyNode nextNode, MyNode prevNode) {
         this.id = id;
         this.data = data;
         this.nextNode = nextNode;
+        this.prevNode = prevNode;
     }
 
     public Object getData() {
@@ -20,6 +22,14 @@ public class MyNode {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public MyNode getPrevNode() {
+        return prevNode;
+    }
+
+    public void setPrevNode(MyNode prevNode) {
+        this.prevNode = prevNode;
     }
 
     public MyNode getNextNode() {
