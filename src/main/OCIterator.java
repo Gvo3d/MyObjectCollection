@@ -7,7 +7,7 @@ import java.util.ListIterator;
  * Created by Gvozd on 20.12.2015.
  */
 public class OCIterator implements ListIterator {
-    @Override
+
     public boolean hasNext() {
         return false;
     }

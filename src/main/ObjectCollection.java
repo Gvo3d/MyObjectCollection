@@ -69,7 +69,7 @@ public class ObjectCollection implements Collection, Iterable {
             return searchNode;
         }
         if (searchNode.getNextNode() == null) {
-            return new MyNode(-1, null, null);
+            return new MyNode(-1, null, null, null);
         }
         return searchDataInNode(searchData, searchNode.getNextNode());
     }
@@ -95,7 +95,7 @@ public class ObjectCollection implements Collection, Iterable {
             return searchNode;
         }
         if (searchNode.getNextNode() == null) {
-            return new MyNode(-1, null, null);
+            return new MyNode(-1, null, null, null);
         }
         return searchIdInNode(searchId, searchNode.getNextNode());
     }
@@ -156,10 +156,10 @@ public class ObjectCollection implements Collection, Iterable {
     private MyNode printNext(MyNode printable) {
         if (printable.getData() != null) {
             System.out.println("Cell " + printable.getId() + " - " + printable.toString());
-            if (printable.getNextNode() == null) return new MyNode(-1, null, null);
+            if (printable.getNextNode() == null) return new MyNode(-1, null, null, null);
             printNext(printable.getNextNode());
         }
-        return new MyNode(-1, null, null);
+        return new MyNode(-1, null, null, null);
     }
 
     public String getObjectClass(int id) {
@@ -180,7 +180,7 @@ public class ObjectCollection implements Collection, Iterable {
     private MyNode trimNext(int newidCounter, MyNode trimNode) {
         trimNode.setId(newidCounter);
         this.idCounter++;
-        if (trimNode.getNextNode() == null) return new MyNode(-1, null, null);
+        if (trimNode.getNextNode() == null) return new MyNode(-1, null, null, null);
         return trimNext(this.idCounter, trimNode.getNextNode());
     }
 
